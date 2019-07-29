@@ -1,14 +1,17 @@
 #pragma once
 
-#include "buffer.h"
-#include "id.h"
-#include "parameter.h"
+#include <math.h>
 
 #include "base/source/fstreamer.h"
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/vst/ivstevents.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include "public.sdk/source/vst/vstaudioeffect.h"
+
+#include "buffer.h"
+#include "constants.h"
+#include "id.h"
+#include "parameter.h"
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
@@ -33,18 +36,16 @@ public:
   tresult PLUGIN_API setState(IBStream *state) SMTG_OVERRIDE;
   tresult PLUGIN_API getState(IBStream *state) SMTG_OVERRIDE;
 
-protected:
-  Buffer *mBuffer[2];
-
-  AutomationParameter *mNoteOns;
-  AutomationParameter *mNoteOffs;
-  AutomationParameter *mDries;
-  AutomationParameter *mWets;
+private:
+  AutomationParameter *mNoteOns = nullptr;
+  AutomationParameter *mNoteOffs = nullptr;
+  AutomationParameter *mDries = nullptr;
+  AutomationParameter *mWets = nullptr;
 
   bool mBypass = false;
-  ParamValue mDry;
-  ParamValue mWet;
-  ParamValue mNoteChannel;
-  ParamValue mNoteNumber;
+  ParamValue mDry = exp(log(10.0) * Constants::defaultDry / 20.0);
+  ParamValue mWet = exp(log(10.0) * Constants::defaultWet / 20.0);
+
+  Buffer **mBuffer = nullptr;
 };
 } // namespace Reverse300

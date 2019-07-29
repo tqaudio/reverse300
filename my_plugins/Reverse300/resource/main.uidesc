@@ -6,31 +6,17 @@
 	<colors>
 		<color name="UnitCColor" rgba="#c3c3c3ff"/>
 	</colors>
-	<template background-color="~ BlackCColor" class="CViewContainer" name="Reverse300" size="480, 480" transparent="false">
+	<template background-color="~ BlackCColor" class="CViewContainer" name="Reverse300" size="480, 240" transparent="false">
 		<!-- DRY KNOB -->
-		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob_1x" class="CAnimKnob" control-tag="Parameters::kDryId" opacity="1" origin="90, 32" size="128, 128" tooltip="Dry" transparent="false" wants-focus="true" wheel-inc-value="0.001" zoom-factor="1.5"/>
-		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kDryId" font="~ NormalFontVeryBig" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="114, 96" size="80, 24" text-alignment="center" title="0.00" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFontSmaller" font-antialias="true" font-color="UnitCColor" opacity="1" origin="90, 120" size="128, 24" text-alignment="center" title="dB" transparent="false"/>
-		<view back-color="~ BlackCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="90, 160" size="128, 24" text-alignment="center" title="DRY" transparent="false"/>
+		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob_1x" class="CAnimKnob" control-tag="Parameters::kDryId" opacity="1" origin="90, 48" size="128, 128" tooltip="Dry" transparent="false" wants-focus="true" wheel-inc-value="0.001" zoom-factor="1.5"/>
+		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kDryId" font="~ NormalFontVeryBig" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="114, 112" size="80, 24" text-alignment="center" title="0.00" transparent="false"/>
+		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFontSmaller" font-antialias="true" font-color="UnitCColor" opacity="1" origin="90, 136" size="128, 24" text-alignment="center" title="dB" transparent="false"/>
+		<view back-color="~ BlackCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="90, 176" size="128, 24" text-alignment="center" title="DRY" transparent="false"/>
 		<!-- WET KNOB -->
-		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob_1x" class="CAnimKnob" control-tag="Parameters::kWetId" opacity="1" origin="272, 32" size="128, 128" tooltip="Wet" transparent="false" wants-focus="true" wheel-inc-value="0.001" zoom-factor="1.5"/>
-		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kWetId" default-value="0.5" font="~ NormalFontVeryBig" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="296, 96" size="80, 24" text-alignment="center" title="0.00" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFontSmaller" font-antialias="true" font-color="UnitCColor" opacity="1" origin="272, 120" size="128, 24" text-alignment="center" title="dB" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="272, 160" size="128, 24" text-alignment="center" title="WET" transparent="false"/>
-		<!-- RECORD -->
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="160, 240" size="80, 24" text-alignment="left" title="RECORD" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="256, 240" size="80, 24" text-alignment="left" title="NOTE ON" transparent="false"/>
-		<!-- PLAYBACK -->
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="160, 272" size="80, 24" text-alignment="left" title="PLAYBACK" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="256, 272" size="80, 24" text-alignment="left" title="NOTE OFF" transparent="false"/>
-		<!-- CHANNEL -->
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="160, 304" size="80, 24" text-alignment="left" title="CHANNEL" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kNoteChannelId" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="256, 304" size="80, 24" text-alignment="left" title="OMNI" transparent="false"/>
-		<!-- NOTE NAME -->
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="160, 336" size="80, 24" text-alignment="left" title="NOTE NAME" transparent="false"/>
-		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kNoteNumberId" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="256, 336" size="80, 24" text-alignment="left" title="ALL" transparent="false"/>
-		<!-- PRODUCT NAME -->
-		<view back-color="~ TransparentCColor" class="CTextLabel" font="ProductNameFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="0, 424" size="480, 24" text-alignment="center" title="Reverse300" transparent="false"/>
+		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob_1x" class="CAnimKnob" control-tag="Parameters::kWetId" opacity="1" origin="272, 48" size="128, 128" tooltip="Wet" transparent="false" wants-focus="true" wheel-inc-value="0.001" zoom-factor="1.5"/>
+		<view back-color="~ TransparentCColor" class="CTextEdit" control-tag="Parameters::kWetId" default-value="0.5" font="~ NormalFontVeryBig" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="296, 112" size="80, 24" text-alignment="center" title="0.00" transparent="false"/>
+		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFontSmaller" font-antialias="true" font-color="UnitCColor" opacity="1" origin="272, 136" size="128, 24" text-alignment="center" title="dB" transparent="false"/>
+		<view back-color="~ TransparentCColor" class="CTextLabel" font="~ NormalFont" font-antialias="true" font-color="~ WhiteCColor" opacity="1" origin="272, 176" size="128, 24" text-alignment="center" title="WET" transparent="false"/>
 	</template>
 	<custom>
 	</custom>
@@ -48,7 +34,5 @@
 		<control-tag name="Parameters::kBypassId" tag="100"/>
 		<control-tag name="Parameters::kDryId" tag="101"/>
 		<control-tag name="Parameters::kWetId" tag="102"/>
-		<control-tag name="Parameters::kNoteChannelId" tag="103"/>
-		<control-tag name="Parameters::kNoteNumberId" tag="104"/>
 	</control-tags>
 </vstgui-ui-description>

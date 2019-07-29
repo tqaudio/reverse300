@@ -1,16 +1,13 @@
 #include "../include/buffer.h"
 
 namespace Reverse300 {
-Buffer::Buffer(int sampleRate, double capacity /* ms */)
-    : mSampleRate(sampleRate), mCapacity(sampleRate * capacity / 1000.0f),
-      mReadHead(0), mWriteHead(0), mReturnPosition(0), mReadOffset(0),
-      mPlaybackState(kNormal) {
-  mBuffer = new double[mCapacity];
-}
+Buffer::Buffer(int sampleRate, double maxDuration /* ms */)
+    : mSampleRate(sampleRate), mCapacity(sampleRate * maxDuration / 1000.0),
+      mBuffer(new double[mCapacity]{}) {}
 
 Buffer::~Buffer() { delete[] mBuffer; }
 
-bool Buffer::isPlaying() { return mPlaybackState == kReverse; }
+bool Buffer::isPlaying() { return mPlaybackState == PlaybackState::kReverse; }
 
 void Buffer::rec() {
   mPlaybackState = kRecord;

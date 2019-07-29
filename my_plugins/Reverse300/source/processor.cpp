@@ -1,12 +1,7 @@
 #include "../include/processor.h"
 
 namespace Reverse300 {
-Processor::Processor()
-    : mDry(DEFAULT_DRY_NORMALIZED), mWet(DEFAULT_WET_NORMALIZED),
-      mNoteChannel(DEFAULT_MIDI_CHANNEL_NORMALIZED),
-      mNoteNumber(DEFAULT_MIDI_NOTE_NORMALIZED) {
-  setControllerClass(ControllerID);
-}
+Processor::Processor() { setControllerClass(ControllerID); }
 
 tresult PLUGIN_API Processor::initialize(FUnknown *context) {
   tresult result = AudioEffect::initialize(context);
@@ -49,21 +44,25 @@ tresult PLUGIN_API Processor::setActive(TBool state) {
     return kResultFalse;
   }
   if (state) {
-    for (int channel = 0; channel < channelCount; channel++) {
-      mBuffer[channel] = new Buffer(processSetup.sampleRate, MAX_DURATION);
-    }
+    mBuffer = new Buffer *[channelCount];
     mWets = new AutomationParameter[processSetup.maxSamplesPerBlock];
     mDries = new AutomationParameter[processSetup.maxSamplesPerBlock];
     mNoteOns = new AutomationParameter[processSetup.maxSamplesPerBlock];
     mNoteOffs = new AutomationParameter[processSetup.maxSamplesPerBlock];
+
+    for (int channel = 0; channel < channelCount; channel++) {
+      mBuffer[channel] = new Buffer(processSetup.sampleRate, Constants::maxDuration);
+    }
   } else {
     for (int channel = 0; channel < channelCount; channel++) {
       delete mBuffer[channel];
     }
-    delete mWets;
-    delete mDries;
-    delete mNoteOns;
-    delete mNoteOffs;
+
+    delete[] mWets;
+    delete[] mDries;
+    delete[] mNoteOns;
+    delete[] mNoteOffs;
+    delete mBuffer;
   }
 
   return AudioEffect::setActive(state);
@@ -97,7 +96,7 @@ tresult PLUGIN_API Processor::process(ProcessData &data) {
       }
       switch (paramQueue->getParameterId()) {
       case Parameters::kBypassId:
-        mBypass = (value > 0.5f);
+        mBypass = (value > 0.5);
         break;
       case Parameters::kDryId:
         mDry = value;
@@ -108,12 +107,6 @@ tresult PLUGIN_API Processor::process(ProcessData &data) {
         mWet = value;
         mWets[sampleOffset].value = value;
         mWets[sampleOffset].hasChanged = true;
-        break;
-      case Parameters::kNoteChannelId:
-        mNoteChannel = value;
-        break;
-      case Parameters::kNoteNumberId:
-        mNoteNumber = value;
         break;
       }
     }
@@ -129,8 +122,6 @@ tresult PLUGIN_API Processor::process(ProcessData &data) {
       }
 
       int sampleOffset = incomingEvent.sampleOffset;
-      int noteNumber = round(mNoteNumber * 128.0f);
-      int noteChannel = round(mNoteChannel * 16.0f);
 
       if (sampleOffset < 0) {
         sampleOffset = 0;
@@ -140,21 +131,9 @@ tresult PLUGIN_API Processor::process(ProcessData &data) {
       }
       switch (incomingEvent.type) {
       case Event::kNoteOnEvent:
-        if (noteNumber <= 127 && noteNumber != incomingEvent.noteOn.pitch ||
-            noteChannel > 0 &&
-                (noteChannel - 1) != incomingEvent.noteOn.channel) {
-          break;
-        }
-
         mNoteOns[sampleOffset].hasChanged = true;
         break;
       case Event::kNoteOffEvent:
-        if (noteNumber <= 127 && noteNumber != incomingEvent.noteOn.pitch ||
-            noteChannel > 0 &&
-                (noteChannel - 1) != incomingEvent.noteOn.channel) {
-          break;
-        }
-
         mNoteOffs[sampleOffset].hasChanged = true;
         break;
       }
@@ -220,19 +199,11 @@ tresult PLUGIN_API Processor::setState(IBStream *state) {
   }
 
   IBStreamer streamer(state, kLittleEndian);
-  int32 savedBypass = 0;
-  float savedNoteChannel = 0.0f;
-  float savedNoteNumber = 0.0f;
-  float savedDry = 0.0f;
-  float savedWet = 0.0f;
+  int32 savedBypass{0};
+  float savedDry{0.0};
+  float savedWet{0.0};
 
   if (!streamer.readInt32(savedBypass)) {
-    return kResultFalse;
-  }
-  if (!streamer.readFloat(savedNoteChannel)) {
-    return kResultFalse;
-  }
-  if (!streamer.readFloat(savedNoteNumber)) {
     return kResultFalse;
   }
   if (!streamer.readFloat(savedDry)) {
@@ -243,8 +214,6 @@ tresult PLUGIN_API Processor::setState(IBStream *state) {
   }
 
   mBypass = savedBypass > 0;
-  mNoteChannel = savedNoteChannel;
-  mNoteNumber = savedNoteNumber;
   mDry = savedDry;
   mWet = savedWet;
 
@@ -254,14 +223,10 @@ tresult PLUGIN_API Processor::setState(IBStream *state) {
 tresult PLUGIN_API Processor::getState(IBStream *state) {
   IBStreamer streamer(state, kLittleEndian);
   int32 saveBypass = mBypass ? 1 : 0;
-  float saveNoteChannel = mNoteChannel;
-  float saveNoteNumber = mNoteNumber;
   float saveDry = mDry;
   float saveWet = mWet;
 
   streamer.writeInt32(saveBypass);
-  streamer.writeFloat(saveNoteChannel);
-  streamer.writeFloat(saveNoteNumber);
   streamer.writeFloat(saveDry);
   streamer.writeFloat(saveWet);
 
